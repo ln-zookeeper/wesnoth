@@ -1375,7 +1375,18 @@ R0lGODlhEAAQAKUZAAAAAIeJhIiKhYqMh4uNiIGXr4KYsLS1s7W2s7W2tKi+1qm/16rA2KvB2azC
 8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8CH5BAEKAD8ALAAAAAAQABAAAAaWwN9B
 QCwaiYjfL0AqlUik0UgkCoVAA6WApFgsGIyGWPwhaEuLgrrgWDvKWhJjXXjY7fDfdr5+QP4WeQIj
 DXQQahEXgiMODn4RERKSGIuOEJCSExMZgiJtdGoUGh5meiKPkgAUABUbpFohqBOrHB0dr3ogDwa8
-BqseHx64ArqXErMAHiDBpQEfz9AAH9LPWT8IR9kCCT9BADs=''')
+BqseHx64ArqXErMAHiDBpQEfz9AAH9LPWT8IR9kCCT9BADs='''),
+           "window_icon":PhotoImage(data=b'''
+R0lGODlhEAAQAMZqAAogQA0lRA4nQBMmQBAoQRUoQRYoQRYpQhcpQxcqQhgqQRgrRBYtQhctQh8w
+SSEwRSMxQiIyRSAyTTE9RTlCSjtDSjRFYDVFYDdFXUBFSjVGYzdGZDpJYkRKWFZKQ1dKQ1ROSlRO
+S1FQSVZQQFNSTlZST1tSQWpTRVdYVUxZcWxURmVZRVNcbWdbSndgQlhkfXVjVYVjOY5jNIxjPY9l
+NGdrcIZnPY9lPoBpSI5oO4RuPJBrP3pwWIZxQYpvT4RxT5RxRaJ2KJ55SYt9apx8UYSCgaSAUpmC
+Y62BNaCCVpmEbaGEWYmJiKOResqQL56XfaKWgc2XOKSfm6yghdidIqyoj92lK6yurq6vsN6xW7m5
+turIeO7MeevMhu3Nfe7SjevWn+zZq+3aou7aofjdj/bfmfLgo/zim/fkmfzurP//////////////
+/////////////////////////////////////////////////////////////////////////yH5
+BAEKAH8ALAAAAAAQABAAAAeOgH+Cg4SFgx+GhB6EIVqDQzCDWiCEVypHNSkcDggZPidYhUYWL0xV
+TygGDDKGSxtTaWJjZz8EO4ZCGlBmYWBlPAI0hkAXRWhfXWQkDTmGNh0sXF5bWRATMYklGEhRTkEK
+Iol/LRImVFYjAyviTRUBOj0AFEqJUn9JEQcFD0R/9uI4EixwIa7QjRkFExIKBAA7=''')
            }
     ROOT_W,ROOT_H=800,480
     # the following string may be confusing, so here there's an explanation
@@ -1389,6 +1400,10 @@ BqseHx64ArqXErMAHiDBpQEfz9AAH9LPWT8IR9kCCT9BADs=''')
     root.title("Maintenance tools GUI")
     root.rowconfigure(0,weight=1)
     root.columnconfigure(0,weight=1)
+    # set the window icon
+    # for now, it's just a grayscale Wesnoth icon
+    # also, this line shouldn't have effect on Mac OS
+    root.tk.call("wm", "iconphoto", root, "-default", ICONS["window_icon"])
     # use a better style on X11 systems instead of the Motif-like one
     style=Style()
     if root.tk.call('tk', 'windowingsystem') == "x11" and "clam" in style.theme_names():

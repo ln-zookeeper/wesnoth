@@ -1,4 +1,7 @@
 Version 1.13.1+dev:
+ * Add-ons client:
+   * Warn user if attempting to upload an addon with a version lesser than or
+     equal to a published version.
  * Campaigns:
    * Delfador's Memoirs:
      * Added defeat condition for death of the last undead veteran in
@@ -17,11 +20,20 @@ Version 1.13.1+dev:
    * New standing animation for the Dwarvish Runesmith
    * New generic portraits for the Troll and Troll Whelp
  * Language and i18n:
-   * Updated translations: Galician
+   * Updated translations: French, Galician, Latvian
  * Lua API:
    * Added support for unit.level field (read only)
+   * Added wesnoth.set_dialog_focus function
+   * Added wesnoth.set_dialog_visible function
  * Music and sound effects:
    * New dwarf hit and die sounds.
+ * Terrains:
+   * Removed unit elevation from N-S hanging bridges
+   * Added unit elevation to NW-SE and SW-NE stone chasm bridges
+   * Added unit elevation to NW-SE and SW-NE plank bridges
+   * Hanging, stone chasm, and plank bridges are now displayed in-game simply
+     as "Bridge", retaining their descriptive names in the editor as per
+     convention.
  * User interface:
    * GUI2:
      * stacked_widget can optionally display a single layer at a time. This
@@ -34,7 +46,36 @@ Version 1.13.1+dev:
  * WML engine:
    * Added support for mod_x,mod_y= in [terrain_graphics].
    * Added support for has_flag= in terrain graphics [variant].
+   * Added category= to [label] - allows grouping labels so that players can
+     show/hide them
+   * Add female_text= to [animate_unit] and [unstore_unit] for easier translating
+   * AMLAs in [modifications] now use [advancement] tags instead of [advance] tags.
+     This means you can add an AMLA to placed unit by simply using its definition macro,
+     for example {AMLA_DEFAULT}.
+   * Add exclude_amla= key in [advancement] which disables the advancment if the unit
+     has already taken certain other advancements.
+   * The WML preprocessor now writes warnings to stderr for macros redefined
+     without #undef, to help detect unintentional name clashes.
+   * Fix macro definition line numbers being offset by 1 in WML preprocessor
+     messages involving macros.
+   * Added WML menu item and event handler views to the Gamestate Inspector
+     dialog.
+   * Added new possibilities for [effect]:
+     * apply_to=alignment - change a unit's alignment
+     * apply_to=attacks_left - change a unit's attacks per turn
+     * apply_to=recall_cost - change a unit's recall cost
+     * apply_to=vision, apply_to=jamming - change a unit's vision/jamming points
+     * apply_to=new_advancement - add new advancement possibilities (either units
+       or AMLAs)
+     * apply_to=remove_advancement - remove advancement possibilities (either units
+       or AMLAs)
+     * apply_to=attack - add set_ versions of all existing increase_ keys
+     * apply_to=attack - add increase_movement_used and set_movement_used to change the
+       number of movement points the attack consumes
+ * Editor:
+   * Added Category field and color sliders to the Edit Label panel.
  * Miscellaneous and bug fixes:
+   * Removed legacy filesystem API implementation.
    * Fixed Generate Map dialog bug that caused last choice of map
      generator to not be actually selected (bug #23711).
    * Fixed unbound memory read in internal time formatting code with
@@ -44,6 +85,10 @@ Version 1.13.1+dev:
      and stderr.txt.
    * Remember last selected modifications separately for single and multiplayer.
    * Fixed SDL2 compilation issues.
+   * Fixed RECRUIT_UNIT_VARIATIONS core WML macro leaking an internal temporary
+     variable ($recruited_unit_random_variation).
+   * Fixed unit [resistance] and [jamming_costs] not being considered for sync
+     check.
 
 Version 1.13.1:
  * Security fixes:

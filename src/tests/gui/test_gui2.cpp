@@ -49,6 +49,7 @@
 #include "gui/dialogs/game_version.hpp"
 #include "gui/dialogs/game_save.hpp"
 #include "gui/dialogs/gamestate_inspector.hpp"
+#include "gui/dialogs/label_settings.hpp"
 #include "gui/dialogs/language_selection.hpp"
 #include "gui/dialogs/lobby_main.hpp"
 #include "gui/dialogs/lobby_player_info.hpp"
@@ -455,6 +456,15 @@ BOOST_AUTO_TEST_CASE(test_gui2)
 	// for dialog with no default constructor
 	list.erase(
 			std::remove(list.begin(), list.end(), "lua_interpreter")
+			, list.end());
+
+	/*
+	 * Disable label settings dialog test because we need a display_context
+	 * object, which we don't have, and it's a lot of work to produce a dummy
+	 * one.
+	 */
+	list.erase(
+			std::remove(list.begin(), list.end(), "label_settings")
 			, list.end());
 
 	//Window 'addon_description' registered but not tested.

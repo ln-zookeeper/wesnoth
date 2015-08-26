@@ -1014,8 +1014,8 @@ int game_lua_kernel::intf_set_variable(lua_State *L)
 int game_lua_kernel::intf_random(lua_State *L)
 {
 	if(lua_isnoneornil(L, 1)) {
-		double r = (double)random_new::generator->next_random();
-		double r_max = (double)std::numeric_limits<uint32_t>::max();
+		double r = double (random_new::generator->next_random());
+		double r_max = double (std::numeric_limits<uint32_t>::max());
 		lua_push(L, r / (r_max + 1));
 		return 1;
 	}
@@ -3276,8 +3276,13 @@ static int intf_add_modification(lua_State *L)
 	unit_ptr u = luaW_checkunit(L, 1);
 	char const *m = luaL_checkstring(L, 2);
 	std::string sm = m;
-	if (sm != "advance" && sm != "object" && sm != "trait")
+	if (sm == "advance") { // Maintain backwards compatibility
+		sm = "advancement";
+		lg::wml_error << "(Lua) Modifications of type \"advance\" are deprecated, use \"advancement\" instead\n";
+	}
+	if (sm != "advancement" && sm != "object" && sm != "trait") {
 		return luaL_argerror(L, 2, "unknown modification type");
+	}
 
 	config cfg = luaW_checkconfig(L, 3);
 	u->add_modification(sm, cfg);
@@ -3585,8 +3590,8 @@ int game_lua_kernel::intf_label(lua_State *L)
 
 		terrain_label label(screen.labels(), cfg.get_config());
 
-		screen.labels().set_label(label.location(), label.text(), label.team_name(), label.color(),
-				label.visible_in_fog(), label.visible_in_shroud(), label.immutable(), label.tooltip());
+		screen.labels().set_label(label.location(), label.text(), label.creator(), label.team_name(), label.color(),
+				label.visible_in_fog(), label.visible_in_shroud(), label.immutable(), label.category(), label.tooltip());
 	}
 	return 0;
 }
