@@ -76,6 +76,7 @@
 #include "gui/dialogs/multiplayer/mp_create_game.hpp"
 #include "gui/dialogs/multiplayer/mp_create_game_set_password.hpp"
 #include "gui/dialogs/multiplayer/mp_join_game_password_prompt.hpp"
+#include "gui/dialogs/multiplayer/mp_staging.hpp"
 #include "gui/dialogs/depcheck_confirm_change.hpp"
 #include "gui/dialogs/depcheck_select_new.hpp"
 #include "gui/dialogs/multiplayer/mp_login.hpp"
@@ -415,6 +416,7 @@ BOOST_AUTO_TEST_CASE(test_gui2)
 	test<gui2::tmp_login>();
 	test<gui2::tmp_method_selection>();
 	test<gui2::tmp_server_list>();
+	//test<gui2::tmp_staging>();
 	test<gui2::tsimple_item_selector>();
 	test<gui2::tscreenshot_notification>();
 	test<gui2::tselect_orb_colors>();
@@ -483,6 +485,7 @@ BOOST_AUTO_TEST_CASE(test_gui2)
 		// The title screen appears to be throwing a bad_alloc on Travis, so disable it for now
 		"title_screen",
 		"end_credits",
+		"mp_staging",
 	};
 	std::sort(list.begin(), list.end());
 	std::sort(omitted.begin(), omitted.end());
@@ -781,7 +784,7 @@ struct twrapper<gui2::tlobby_main>
 	twesnothd_connection_init wesnothd_connection_init;
 	std::vector<std::string> installed_addons;
 	lobby_info li;
-	twrapper() : wesnothd_connection("", ""), wesnothd_connection_init(wesnothd_connection), li(game_config, installed_addons, wesnothd_connection)
+	twrapper() : wesnothd_connection("", ""), wesnothd_connection_init(wesnothd_connection), li(game_config, installed_addons)
 	{
 	}
 	gui2::tlobby_main* create()
@@ -810,7 +813,7 @@ struct twrapper<gui2::tlobby_player_info>
 	lobby_info li;
 	twrapper()
 		: wesnothd_connection("", ""), wesnothd_connection_init(wesnothd_connection)
-		, ui(c), li(c, installed_addons, wesnothd_connection)
+		, ui(c), li(c, installed_addons)
 	{
 	}
 	gui2::tlobby_player_info* create()
